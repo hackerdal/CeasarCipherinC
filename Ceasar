@@ -1,0 +1,98 @@
+#include<stdio.h>
+#include<string.h>
+#include<cs50.h>
+#include<stdlib.h>
+#include<ctype.h>
+
+int main(int argv,string argv[])//argc is the key of the cipher. For example 3 that Ceasar used
+{
+
+    if(argc==2)//argc is the number of string that the user write. For example ./ceasar 13 has argc=2
+{
+    for(int k=0;k<strlen(argv[1]);k++)
+    {
+    bool anahtar=isdigit(argv[1][k]);//isdigit() function return 0 if the input is not an integer
+    if(!anahtar)
+    {
+         printf("Usage: ./caesar key\n");
+         break;
+    }
+    else
+    {
+        if(anahtar)
+            { 
+                printf("Success\n");//if user write the input in a proper way, the program prints success
+                for(int i=1;i<argc;i++)
+                    {
+                    for(int j=0,n=strlen(argv[i]);j<n;j++)
+                         {
+                             printf("%c",j);
+                         }
+                    }
+                int m=strlen(argv[1]);
+                char key[m];
+                for(int i=0;i<m;i++)
+                     {
+                        key[i]=argv[1][i];
+                        printf("%c",key[i]);
+                     }
+                printf("\n");
+                int keyn=atoi(key);//atoi() converts the char input into the integer
+                string plaintext=get_string("Plaintext: ");
+                int length=strlen(plaintext);
+                char ciphertext[length];
+                int keym=(keyn%26);//if the key is 35 we dont use 35 for simplicity, we use 9 for example
+                
+                for(int i=0;i<length;i++)
+                {
+                   
+                    
+                     if(plaintext[i]>='A'&&plaintext[i]<='Z')
+                    {
+                    if('Z'-plaintext[i]<keym)
+                         {
+                         ciphertext[i]=keym-('Z'-plaintext[i])+'A'-1;
+                         }
+                    else
+                        {
+                        ciphertext[i]=plaintext[i]+keym;
+                        }
+                     }
+                    else if(plaintext[i]>='a'&&plaintext[i]<='z')//the letter is a small letter
+                    {
+                    if(('z'-plaintext[i])-keym<0)
+                        {
+                            ciphertext[i]=keym-('z'-plaintext[i])+'a'-1;
+                        }
+                    else
+                    {
+                        ciphertext[i]=plaintext[i]+keym;
+                    }
+                    }
+                    else//if the input has space or some what else of a letter dont change 
+                    {
+                    ciphertext[i]=plaintext[i];
+                    }
+            
+                  }
+                printf("ciphertext: ");
+                for(int i=0;i<length;i++)
+                 {
+                    printf("%c",ciphertext[i]);
+                 }
+                }
+   
+    }
+    break;
+    }
+    printf("\n");
+}
+    else
+    {
+        printf("Usage: ./caesar key");
+    }
+
+    
+}
+
+
