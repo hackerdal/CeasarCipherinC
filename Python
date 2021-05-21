@@ -1,0 +1,36 @@
+#key space= 26, so 0<key<26
+#write text that is encrypted
+text = input("Text: ") 
+for key in range(26):
+
+    decryption=''
+
+    for c in text:
+        #c is upper or lower case
+        #if c is not a letter, then there should not be a change
+        if c.isupper():
+            #if c is upper, ord('A') = 65, ..., ord('Z')=90
+            #find the position of c between 0-25
+            c_position = ord(c) - ord('A')
+
+            #inverse shift
+            c_new_position = (c_position - key) % 26
+            c_original_position = c_new_position + ord('A')
+            #convert to char
+            plain_char = chr(c_original_position)
+            #append to decryption text
+            decryption = decryption + plain_char
+
+        elif c.islower():
+            #c is lower case
+            c_position = ord(c)-ord('a')
+            c_original_position = (c_position - key) % 26 +ord('a')
+            #convert to char
+            plain_char = chr(c_original_position)
+            decryption = decryption + plain_char
+            
+        #c could be space or non-letter   
+        else:
+            decryption = decryption + c
+
+    print(decryption)
